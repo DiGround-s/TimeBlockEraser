@@ -1,0 +1,4 @@
+name: TimeBlockEraser
+version: '${project.version}'
+main: dev.xf3d3.timeblockeraser.TimeBlockEraser
+api-version: '1.16'
