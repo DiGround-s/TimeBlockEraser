@@ -1,8 +1,7 @@
 package dev.xf3d3.timeblockeraser;
 
 import co.aikar.commands.PaperCommandManager;
-import dev.xf3d3.timeblockeraser.commands.Info;
-import dev.xf3d3.timeblockeraser.commands.Reload;
+import dev.xf3d3.timeblockeraser.commands.MainCommand;
 import dev.xf3d3.timeblockeraser.config.Settings;
 import dev.xf3d3.timeblockeraser.listener.BlockPlace;
 import dev.xf3d3.timeblockeraser.listener.EntityPlace;
@@ -12,7 +11,6 @@ import net.william278.annotaml.Annotaml;
 import net.william278.desertwell.util.ThrowingConsumer;
 import net.william278.desertwell.util.UpdateChecker;
 import org.bstats.bukkit.Metrics;
-import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
@@ -125,8 +123,7 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
 
     private void registerCommands() {
         // Register the plugin commands
-        //this.manager.registerCommand(new Info(this));
-        //this.manager.registerCommand(new Reload(this));
+        this.manager.registerCommand(new MainCommand(this));
     }
 
     public void registerEvents() {

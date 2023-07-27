@@ -17,7 +17,7 @@ import java.util.Map;
         ┃      Developed by xF3d3      ┃
         ┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
         ┃
-        ┗╸ Information: https://modrinth.com/plugin/ultimate-teams""")
+        ┗╸ Information: https://modrinth.com/plugin/timeblockeraser""")
 public class Settings {
 
     @YamlComment("Enabled Worlds")
@@ -28,14 +28,14 @@ public class Settings {
     @YamlKey("bypass-perm")
     private boolean bypass = true;
 
-    @YamlComment("Set here the blocks you want to delete and the time in seconds!")
+    @YamlComment("Set here the blocks you want to delete and the time in seconds! [NOTE: The blocks name can be different between versions]")
     @YamlKey("blocks")
     private Map<String, Integer> blocks = Map.of(
             "OBSIDIAN", 10,
             "COBWEB", 30
     );
 
-    @YamlComment("Set here the entities you want to delete and the time in seconds! [NOTE: The entities name can be different between versions]")
+    @YamlComment("Set here the entities you want to delete and the time in seconds! [NOTE: The entities name can be different between versions] \nAvailable entities: armor stands, boats, minecarts, end crystals")
     @YamlKey("entities")
     private Map<String, Integer> entities = Map.of(
             "ENDER_CRYSTAL", 10
