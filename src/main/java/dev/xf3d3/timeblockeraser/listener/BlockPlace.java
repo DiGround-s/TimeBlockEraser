@@ -28,8 +28,6 @@ public class BlockPlace implements Listener {
             return;
         }
 
-        System.out.println("1");
-
         Block mainBlock = event.getBlockPlaced();
         Material material = mainBlock.getType();
         Player player = event.getPlayer();
@@ -37,20 +35,15 @@ public class BlockPlace implements Listener {
         for (String key : plugin.getSettings().getBlocks().keySet()) {
             Material block = Material.getMaterial(key);
 
-            System.out.println("2");
-
             // Check if the block should be removed
             if (block == null || material != block) {
                 continue;
             }
-            System.out.println("3");
 
             // Check if the player has the bypass permission
             if (plugin.getSettings().enableBypass() && player.hasPermission("timeblockeraser.bypass")) {
                 continue;
             }
-
-            System.out.println("4");
 
             plugin.runLater(() -> mainBlock.setType(Material.AIR), plugin.getSettings().getBlocks().get(key));
         }
