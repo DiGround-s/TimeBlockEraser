@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.logging.Level;
 
 public class EntityPlace implements Listener {
     private final TimeBlockEraser plugin;
@@ -43,6 +44,16 @@ public class EntityPlace implements Listener {
 
             // Check if the player has the bypass permission
             if (plugin.getSettings().enableBypass() && player.hasPermission("timeblockeraser.bypass")) {
+                continue;
+            }
+
+            if (
+                    plugin.getSettings().getWorldGuardHook() &&
+                    !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("entity"))
+            ) {
+                // TODO: remove debug
+                plugin.getLogger().log(Level.WARNING, "not removing entity because of worldguard flag");
+
                 continue;
             }
 

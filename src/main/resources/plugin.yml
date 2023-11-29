@@ -4,6 +4,8 @@ main: dev.xf3d3.timeblockeraser.TimeBlockEraser
 api-version: '1.16'
 folia-compatible: true
 author: xF3d3
+softdepend:
+  - WorldGuard
 permissions:
   timeblockeraser.about:
     default: true

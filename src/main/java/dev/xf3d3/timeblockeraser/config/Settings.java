@@ -28,6 +28,10 @@ public class Settings {
     @YamlKey("bypass-perm")
     private boolean bypass = true;
 
+    @YamlComment("Enable WorldGuard hook")
+    @YamlKey("worldguard-hook")
+    private boolean flag = false;
+
     @YamlComment("Set here the blocks you want to delete and the time in seconds! [NOTE: The blocks name can be different between versions]")
     @YamlKey("blocks")
     private Map<String, Integer> blocks = Map.of(
@@ -43,6 +47,10 @@ public class Settings {
 
     public boolean enableBypass() {
         return bypass;
+    }
+
+    public boolean getWorldGuardHook() {
+        return flag;
     }
 
     public List<String> getWorlds() {

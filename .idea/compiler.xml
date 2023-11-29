@@ -9,8 +9,5 @@
         <module name="TimeBlockEraser" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TimeBlockEraser" target="15" />
-    </bytecodeTargetLevel>
   </component>
 </project>

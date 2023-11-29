@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
+import java.util.logging.Level;
 
 public class BlockPlace implements Listener {
     private final TimeBlockEraser plugin;
@@ -42,6 +43,16 @@ public class BlockPlace implements Listener {
 
             // Check if the player has the bypass permission
             if (plugin.getSettings().enableBypass() && player.hasPermission("timeblockeraser.bypass")) {
+                continue;
+            }
+
+            if (
+                    plugin.getSettings().getWorldGuardHook() &&
+                    !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
+            ) {
+                // TODO: remove debug
+                plugin.getLogger().log(Level.WARNING, "not removing block because of worldguard flag");
+
                 continue;
             }
 

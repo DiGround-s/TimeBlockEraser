@@ -3,6 +3,7 @@ package dev.xf3d3.timeblockeraser;
 import co.aikar.commands.PaperCommandManager;
 import dev.xf3d3.timeblockeraser.commands.MainCommand;
 import dev.xf3d3.timeblockeraser.config.Settings;
+import dev.xf3d3.timeblockeraser.hooks.WorldGuard;
 import dev.xf3d3.timeblockeraser.listener.BlockPlace;
 import dev.xf3d3.timeblockeraser.listener.EntityPlace;
 import dev.xf3d3.timeblockeraser.utils.TaskRunner;
@@ -33,25 +34,16 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
     private UpdateChecker updateChecker;
     private PaperCommandManager manager;
     private Settings settings;
+    private WorldGuard worldGuardHook;
 
     @Override
     public void onLoad() {
         // Set the instance
         instance = this;
-    }
 
-    @Override
-    public void onEnable() {
         this.tasks = new ConcurrentHashMap<>();
         this.paperLib = new MorePaperLib(this);
-        this.manager = new PaperCommandManager(this);
         // this.updateChecker = new UpdateCheck(this);
-
-        // Register commands
-        initialize("commands", (plugin) -> registerCommands());
-
-        // Register events
-        initialize("events", (plugin) -> registerEvents());
 
         // Load settings and locales
         initialize("plugin config & locale files", (plugin) -> {
@@ -60,8 +52,27 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
             }
         });
 
+        if (Bukkit.getPluginManager().getPlugin("WorldGuard") != null && getSettings().getWorldGuardHook()) {
+            initialize("WorldGuard hook", (plugin) -> {
+                worldGuardHook = new WorldGuard(this);
+                worldGuardHook.registerFlags();
+            });
+
+        }
+
         // Hook into bStats
         initialize("metrics", (plugin) -> this.registerMetrics(METRICS_ID));
+    }
+
+    @Override
+    public void onEnable() {
+        this.manager = new PaperCommandManager(this);
+
+        // Register commands
+        initialize("commands", (plugin) -> registerCommands());
+
+        // Register events
+        initialize("events", (plugin) -> registerEvents());
 
         // Check for updates
         //updateChecker.checkForUpdates();
@@ -153,6 +164,9 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
         Bukkit.getConsoleSender().sendMessage(Utils.Color(text));
     }
 
+    public WorldGuard getWorldGuardHook() {
+        return worldGuardHook;
+    }
     public static TimeBlockEraser getPlugin() {
         return instance;
     }
