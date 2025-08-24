@@ -33,6 +33,28 @@ public class BlockPlace implements Listener {
         Material material = mainBlock.getType();
         Player player = event.getPlayer();
 
+        // Check if the player has the bypass permission
+        if (plugin.getSettings().enableBypass() && player.hasPermission("timeblockeraser.bypass")) {
+            return;
+        }
+
+        // Check WorldGuard flag
+        if (
+                plugin.getSettings().getWorldGuardHook() &&
+                        !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
+        ) {
+            // TODO: remove debug
+            plugin.getLogger().log(Level.WARNING, "not removing block because of worldguard flag");
+            return;
+        }
+
+        // Check if all_blocks is enabled
+        if (plugin.getSettings().getAllBlocks().isEnabled()) {
+            plugin.runLaterAt(mainBlock.getLocation(), () -> mainBlock.setType(Material.AIR), plugin.getSettings().getAllBlocks().getTime());
+            return;
+        }
+
+        // Check individual block configurations
         for (String key : plugin.getSettings().getBlocks().keySet()) {
             Material block = Material.getMaterial(key);
 
@@ -41,22 +63,8 @@ public class BlockPlace implements Listener {
                 continue;
             }
 
-            // Check if the player has the bypass permission
-            if (plugin.getSettings().enableBypass() && player.hasPermission("timeblockeraser.bypass")) {
-                continue;
-            }
-
-            if (
-                    plugin.getSettings().getWorldGuardHook() &&
-                            !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
-            ) {
-                // TODO: remove debug
-                plugin.getLogger().log(Level.WARNING, "not removing block because of worldguard flag");
-
-                continue;
-            }
-
             plugin.runLaterAt(mainBlock.getLocation(), () -> mainBlock.setType(Material.AIR), plugin.getSettings().getBlocks().get(key));
+            break;
         }
     }
 }

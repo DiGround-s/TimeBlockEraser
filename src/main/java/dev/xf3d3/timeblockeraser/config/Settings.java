@@ -45,6 +45,10 @@ public class Settings {
             "ENDER_CRYSTAL", 10
     );
 
+    @YamlComment("Make ALL placed blocks temporary - overrides individual block settings when enabled")
+    @YamlKey("all_blocks")
+    private AllBlocksConfig allBlocks = new AllBlocksConfig();
+
     public boolean enableBypass() {
         return bypass;
     }
@@ -63,5 +67,25 @@ public class Settings {
 
     public Map<String, Integer> getEntities() {
         return entities;
+    }
+
+    public AllBlocksConfig getAllBlocks() {
+        return allBlocks;
+    }
+
+    public static class AllBlocksConfig {
+        @YamlKey("enabled")
+        private boolean enabled = false;
+
+        @YamlKey("time")
+        private int time = 20;
+
+        public boolean isEnabled() {
+            return enabled;
+        }
+
+        public int getTime() {
+            return time;
+        }
     }
 }
