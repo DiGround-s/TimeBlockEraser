@@ -1,6 +1,7 @@
 package dev.xf3d3.timeblockeraser.utils;
 
 import dev.xf3d3.timeblockeraser.TimeBlockEraser;
+import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import space.arim.morepaperlib.scheduling.GracefulScheduling;
 import space.arim.morepaperlib.scheduling.ScheduledTask;
@@ -28,7 +29,7 @@ public interface TaskRunner {
 
     default int runAsyncRepeating(@NotNull Runnable runnable, long period) {
         final int taskId = getNextTaskId();
-        getScheduler().asyncScheduler().runAtFixedRate(runnable, Duration.ZERO, getDurationTicks(period));
+        getTasks().put(taskId, getScheduler().asyncScheduler().runAtFixedRate(runnable, getDurationTicks(0), getDurationTicks(period)));
         return taskId;
     }
 
@@ -36,13 +37,24 @@ public interface TaskRunner {
         getScheduler().globalRegionalScheduler().runDelayed(runnable, delay * 20);
     }
 
+    default void runLaterAt(@NotNull Location location, @NotNull Runnable runnable, long delay) {
+        getScheduler().regionSpecificScheduler(location).runDelayed(runnable, delay * 20);
+    }
+
     default void runSync(@NotNull Runnable runnable) {
         getScheduler().globalRegionalScheduler().run(runnable);
     }
 
+    default void runSyncAt(@NotNull Location location, @NotNull Runnable runnable) {
+        getScheduler().regionSpecificScheduler(location).run(runnable);
+    }
+
     default void runSyncRepeating(@NotNull Runnable runnable, long period) {
-        getScheduler().asyncScheduler().runAtFixedRate(runnable, Duration.ZERO, Duration
-                .of(period * 50L, ChronoUnit.MILLIS));
+        getScheduler().asyncScheduler().runAtFixedRate(runnable, getDurationTicks(0), getDurationTicks(period));
+    }
+
+    default void runSyncRepeatingAt(@NotNull Location location, @NotNull Runnable runnable, long period) {
+        getScheduler().asyncScheduler().runAtFixedRate(runnable, getDurationTicks(0), getDurationTicks(period));
     }
 
     @NotNull

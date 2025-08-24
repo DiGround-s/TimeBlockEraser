@@ -49,7 +49,7 @@ public class EntityPlace implements Listener {
 
             if (
                     plugin.getSettings().getWorldGuardHook() &&
-                    !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("entity"))
+                            !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("entity"))
             ) {
                 // TODO: remove debug
                 plugin.getLogger().log(Level.WARNING, "not removing entity because of worldguard flag");
@@ -57,7 +57,7 @@ public class EntityPlace implements Listener {
                 continue;
             }
 
-            plugin.runLater(entity::remove, plugin.getSettings().getEntities().get(key));
+            plugin.runLaterAt(entity.getLocation(), entity::remove, plugin.getSettings().getEntities().get(key));
         }
     }
 }

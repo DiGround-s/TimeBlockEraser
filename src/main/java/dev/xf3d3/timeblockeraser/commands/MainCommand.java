@@ -35,9 +35,9 @@ public class MainCommand extends BaseCommand {
     public void reloadSubcommand(CommandSender sender) {
         sender.sendMessage(Utils.Color("&3Reloading the plugin..."));
 
-        plugin.runSync(() -> {
+        plugin.runAsync(() -> {
             plugin.loadConfigs();
-            sender.sendMessage(Utils.Color("&3Plugin reloaded successfully!"));
+            plugin.runSync(() -> sender.sendMessage(Utils.Color("&3Plugin reloaded successfully!")));
         });
     }
 }

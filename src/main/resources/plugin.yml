@@ -3,6 +3,7 @@ version: '${project.version}'
 main: dev.xf3d3.timeblockeraser.TimeBlockEraser
 api-version: '1.16'
 folia-compatible: true
+folia-supported: true
 author: xF3d3
 softdepend:
   - WorldGuard

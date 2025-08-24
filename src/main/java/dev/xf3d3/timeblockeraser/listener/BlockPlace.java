@@ -48,7 +48,7 @@ public class BlockPlace implements Listener {
 
             if (
                     plugin.getSettings().getWorldGuardHook() &&
-                    !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
+                            !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
             ) {
                 // TODO: remove debug
                 plugin.getLogger().log(Level.WARNING, "not removing block because of worldguard flag");
@@ -56,7 +56,7 @@ public class BlockPlace implements Listener {
                 continue;
             }
 
-            plugin.runLater(() -> mainBlock.setType(Material.AIR), plugin.getSettings().getBlocks().get(key));
+            plugin.runLaterAt(mainBlock.getLocation(), () -> mainBlock.setType(Material.AIR), plugin.getSettings().getBlocks().get(key));
         }
     }
 }
