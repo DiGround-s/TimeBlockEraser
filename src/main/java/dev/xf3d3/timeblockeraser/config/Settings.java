@@ -46,8 +46,11 @@ public class Settings {
     );
 
     @YamlComment("Make ALL placed blocks temporary - overrides individual block settings when enabled")
-    @YamlKey("all_blocks")
-    private AllBlocksConfig allBlocks = new AllBlocksConfig();
+    @YamlKey("all_blocks.enabled")
+    private boolean allBlocksEnabled = false;
+
+    @YamlKey("all_blocks.time")
+    private int allBlocksTime = 20;
 
     public boolean enableBypass() {
         return bypass;
@@ -69,23 +72,11 @@ public class Settings {
         return entities;
     }
 
-    public AllBlocksConfig getAllBlocks() {
-        return allBlocks;
+    public boolean isAllBlocksEnabled() {
+        return allBlocksEnabled;
     }
 
-    public static class AllBlocksConfig {
-        @YamlKey("enabled")
-        private boolean enabled = false;
-
-        @YamlKey("time")
-        private int time = 20;
-
-        public boolean isEnabled() {
-            return enabled;
-        }
-
-        public int getTime() {
-            return time;
-        }
+    public int getAllBlocksTime() {
+        return allBlocksTime;
     }
 }

@@ -49,8 +49,8 @@ public class BlockPlace implements Listener {
         }
 
         // Check if all_blocks is enabled
-        if (plugin.getSettings().getAllBlocks().isEnabled()) {
-            plugin.runLaterAt(mainBlock.getLocation(), () -> mainBlock.setType(Material.AIR), plugin.getSettings().getAllBlocks().getTime());
+        if (plugin.getSettings().isAllBlocksEnabled()) {
+            plugin.runLaterAt(mainBlock.getLocation(), () -> mainBlock.setType(Material.AIR), plugin.getSettings().getAllBlocksTime());
             return;
         }
 
