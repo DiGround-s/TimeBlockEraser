@@ -3,7 +3,6 @@ package dev.xf3d3.timeblockeraser.listener;
 import dev.xf3d3.timeblockeraser.TimeBlockEraser;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -43,8 +42,6 @@ public class BlockPlace implements Listener {
                 plugin.getSettings().getWorldGuardHook() &&
                         !plugin.getWorldGuardHook().checkFlag(player.getLocation(), plugin.getWorldGuardHook().getFlag("block"))
         ) {
-            // TODO: remove debug
-            plugin.getLogger().log(Level.WARNING, "not removing block because of worldguard flag");
             return;
         }
 

@@ -1,6 +1,8 @@
 package dev.xf3d3.timeblockeraser;
 
 import co.aikar.commands.PaperCommandManager;
+import com.tcoded.folialib.FoliaLib;
+import com.tcoded.folialib.impl.PlatformScheduler;
 import dev.xf3d3.timeblockeraser.commands.MainCommand;
 import dev.xf3d3.timeblockeraser.config.Settings;
 import dev.xf3d3.timeblockeraser.hooks.WorldGuard;
@@ -17,31 +19,30 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import space.arim.morepaperlib.MorePaperLib;
-import space.arim.morepaperlib.scheduling.GracefulScheduling;
-import space.arim.morepaperlib.scheduling.ScheduledTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
     private static final int METRICS_ID = 19258;
+
     private static TimeBlockEraser instance;
-    private ConcurrentHashMap<Integer, ScheduledTask> tasks;
+
     private MorePaperLib paperLib;
     private UpdateChecker updateChecker;
     private PaperCommandManager manager;
     private Settings settings;
     private WorldGuard worldGuardHook;
+    private FoliaLib foliaLib;
 
     @Override
     public void onLoad() {
         // Set the instance
         instance = this;
 
-        this.tasks = new ConcurrentHashMap<>();
+        this.foliaLib = new FoliaLib(this);
         this.paperLib = new MorePaperLib(this);
         // this.updateChecker = new UpdateCheck(this);
 
@@ -86,7 +87,7 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
         sendConsole("&6TimeBlockEraser: &3Plugin by: &b&lxF3d3");
 
         // Cancel plugin tasks
-        getScheduler().cancelGlobalTasks();
+        getScheduler().cancelAllTasks();
 
         // Final plugin shutdown message
         sendConsole("&6TimeBlockEraser: &3Plugin Version: &d&l" + getDescription().getVersion());
@@ -173,13 +174,7 @@ public final class TimeBlockEraser extends JavaPlugin implements TaskRunner {
 
     @Override
     @NotNull
-    public GracefulScheduling getScheduler() {
-        return paperLib.scheduling();
-    }
-
-    @Override
-    @NotNull
-    public ConcurrentHashMap<Integer, ScheduledTask> getTasks() {
-        return tasks;
+    public PlatformScheduler getScheduler() {
+        return foliaLib.getScheduler();
     }
 }

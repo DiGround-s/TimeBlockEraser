@@ -22,7 +22,7 @@ public class Settings {
 
     @YamlComment("Enabled Worlds")
     @YamlKey("enabled-worlds")
-    private List<String> enabledWorlds = List.of("BoxPvP", "MyWorld");
+    private List<String> enabledWorlds = List.of("BoxPvP", "MyWorld", "world");
 
     @YamlComment("Enable bypass permission")
     @YamlKey("bypass-perm")

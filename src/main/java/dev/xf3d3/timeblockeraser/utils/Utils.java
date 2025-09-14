@@ -1,14 +1,7 @@
 package dev.xf3d3.timeblockeraser.utils;
 
-import dev.xf3d3.timeblockeraser.TimeBlockEraser;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
